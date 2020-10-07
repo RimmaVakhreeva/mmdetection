@@ -4,7 +4,7 @@ log_config = dict(
     interval=50,
     hooks=[
         dict(type='TextLoggerHook'),
-        # dict(type='TensorboardLoggerHook')
+        dict(type='WandbLoggerHook', init_kwargs={'project': 'shelves_detection'})
     ])
 # yapf:enable
 dist_params = dict(backend='nccl')

@@ -10,7 +10,6 @@ model = dict(
         depth=18,
         num_stages=4,
         out_indices=(0, 1, 2, 3),
-        frozen_stages=1,
         norm_cfg=dict(type='BN', requires_grad=True),
         norm_eval=True,
         style='pytorch'),
@@ -23,7 +22,7 @@ model = dict(
         num_outs=5),
     bbox_head=dict(
         type='GFLHead',
-        num_classes=80,
+        num_classes=1,
         in_channels=256,
         stacked_convs=4,
         feat_channels=256,
@@ -40,7 +39,7 @@ model = dict(
             loss_weight=1.0),
         loss_dfl=dict(type='DistributionFocalLoss', loss_weight=0.25),
         reg_max=16,
-        loss_bbox=dict(type='GIoULoss', loss_weight=2.0)))
+        loss_bbox=dict(type='CIoULoss', loss_weight=2.0)))
 # training and testing settings
 train_cfg = dict(
     assigner=dict(type='ATSSAssigner', topk=9),
@@ -52,6 +51,6 @@ test_cfg = dict(
     min_bbox_size=0,
     score_thr=0.05,
     nms=dict(type='nms', iou_threshold=0.6),
-    max_per_img=100)
+    max_per_img=2000)
 # optimizer
 optimizer = dict(type='SGD', lr=0.01, momentum=0.9, weight_decay=0.0001)
